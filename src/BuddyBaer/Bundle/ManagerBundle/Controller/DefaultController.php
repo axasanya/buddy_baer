@@ -4,10 +4,14 @@ namespace BuddyBaer\Bundle\ManagerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class IndexController extends Controller
+class DefaultController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('BuddyBaerManagerBundle:Default:index.html.twig');
+        /** @var Ivory\GoogleMapBundle\Model\Map */
+        $map = $this->get('ivory_google_map.map');
+       // var_dump("<pre>", $map);die;
+
+        return $this->render('BuddyBaerManagerBundle:Default:index.html.twig', array('map' => $map));
     }
 }
