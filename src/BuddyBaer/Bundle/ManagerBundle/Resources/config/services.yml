@@ -1,0 +1,7 @@
+parameters:
+#    buddy_baer_manager.example.class: BuddyBaer\Bundle\ManagerBundle\Example
+
+services:
+#    buddy_baer_manager.example:
+#        class: %buddy_baer_manager.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

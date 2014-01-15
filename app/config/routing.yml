@@ -1,0 +1,4 @@
+buddy_baer_manager:
+    resource: "@BuddyBaerManagerBundle/Resources/config/routing.yml"
+    prefix:   /
+
