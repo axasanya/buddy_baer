@@ -1,3 +1,20 @@
-Hello baer
-{{ google_map_container(map) }}
-{{ google_map_js(map) }}
+{% extends 'base.html.twig' %}
+{% block menubar %}
+    {{ include('BuddyBaerManagerBundle:Default:menubar.html.twig') }}
+{% endblock %}
+{% block body %}
+<div class="row-fluid">
+    <div class="span6">
+        {{ google_map_container(map) }}
+        {{ google_map_js(map) }}
+    </div>
+    <div class="span6">
+
+        {{ form(form) }}
+    </div>
+</div>
+
+
+
+
+{% endblock %}

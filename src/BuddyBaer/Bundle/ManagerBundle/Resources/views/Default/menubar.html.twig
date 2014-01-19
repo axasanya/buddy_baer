@@ -1,0 +1,9 @@
+<div class="row-fluid">
+    <div class="span12">
+        <ul class="nav nav-tabs">
+            <li {% if 'buddy_baer_manager_homepage' in app.request.attributes.get('_route') %}class="active"{% endif %}>
+                <a href="{{ path('buddy_baer_manager_homepage')  }}">Home</a>
+            </li>
+        </ul>
+    </div>
+</div>

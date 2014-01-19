@@ -3,17 +3,19 @@
 namespace BuddyBaer\Bundle\ManagerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use BuddyBaer\Bundle\ManagerBundle\Entity\BuddyBaer as BuddyBaer;
+use Symfony\Component\HttpFoundation\Request;
 use Ivory\GoogleMap\Overlays\Animation;
 use Ivory\GoogleMap\Overlays\Marker;
+use Ivory\GoogleMapBundle\Entity\Map as Map;
 
 
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        /** @var Ivory\GoogleMapBundle\Entity\Map */
+        /** @var Map */
         $map = $this->get('ivory_google_map.map');
 
         $markerFromConfig = $this->get('ivory_google_map.marker');
@@ -21,7 +23,7 @@ class DefaultController extends Controller
 
 
         $marker = new Marker();
-// Configure your marker options
+
         $marker->setPrefixJavascriptVariable('marker_');
         $marker->setPosition( 52.5343700,13.4305300, true);
         $marker->setAnimation(Animation::DROP);
@@ -33,13 +35,44 @@ class DefaultController extends Controller
             'flat'      => true,
         ));
 
+
+
         $map->addMarker($marker);
 
-       // var_dump("<pre>", $map);die;
+        $newBuddyBaer = new BuddyBaer();
+        $form = $this->createBaerForm($newBuddyBaer);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $newBuddyBaer->upload();
+
+            $em->persist($newBuddyBaer);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('buddy_baer_manager_homepage'));
+        }
 
         return $this->render('BuddyBaerManagerBundle:Default:index.html.twig',
             array('map' => $map,
-               // 'marker' => $marker
+                'form'=> $form->createView()
         ));
+    }
+
+    /**
+     * @param BuddyBaer $buddyBaer
+     */
+    private function createBaerForm(BuddyBaer $buddyBaer){
+        $form = $this->createFormBuilder($buddyBaer)
+            ->add('name', 'text')
+            ->add('description', 'textarea')
+            ->add('latitude', 'text')
+            ->add('longitude', 'text')
+            ->add('file' )
+            ->add('save', 'submit')
+            ->getForm();
+        return $form;
     }
 }
