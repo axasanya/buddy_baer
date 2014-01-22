@@ -2,6 +2,7 @@
 
 namespace BuddyBaer\Bundle\ManagerBundle\Controller;
 
+use BuddyBaer\Bundle\ManagerBundle\Helper\BaerHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use BuddyBaer\Bundle\ManagerBundle\Entity\BuddyBaer as BuddyBaer;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,11 +19,22 @@ class DefaultController extends Controller
         /** @var Map */
         $map = $this->get('ivory_google_map.map');
 
-        $markerFromConfig = $this->get('ivory_google_map.marker');
-        $map->addMarker($markerFromConfig);
+        $baerRepository = $this->getDoctrine()
+            ->getRepository('BuddyBaerManagerBundle:BuddyBaer');
+        $allBears = $baerRepository->findAll();
+
+        foreach($allBears as $baer){
+            $map->addMarker( BaerHelper::getMarker($baer));
+        }
 
 
-        $marker = new Marker();
+
+
+    //    $markerFromConfig = $this->get('ivory_google_map.marker');
+    //    $map->addMarker($markerFromConfig);
+
+
+      /*  $marker = new Marker();
 
         $marker->setPrefixJavascriptVariable('marker_');
         $marker->setPosition( 52.5343700,13.4305300, true);
@@ -35,9 +47,9 @@ class DefaultController extends Controller
             'flat'      => true,
         ));
 
+*/
 
-
-        $map->addMarker($marker);
+  //      $map->addMarker($marker);
 
         $newBuddyBaer = new BuddyBaer();
         $form = $this->createBaerForm($newBuddyBaer);
