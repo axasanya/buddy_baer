@@ -1,7 +1,15 @@
 parameters:
+    buddy_baer.gps_file_helper.class: BuddyBaer\Bundle\ManagerBundle\Helper\GpsFileHelper
+    buddy_baer.file_helper.class: BuddyBaer\Bundle\ManagerBundle\Helper\FileHelper
 #    buddy_baer_manager.example.class: BuddyBaer\Bundle\ManagerBundle\Example
 
 services:
+    buddy_baer.gps_file_helper:
+        class: %buddy_baer.gps_file_helper.class%
+    buddy_baer.file_helper:
+        class: %buddy_baer.file_helper.class%
+        calls:
+          - [setGpsFileHelper, ["@buddy_baer.gps_file_helper"]]
 #    buddy_baer_manager.example:
 #        class: %buddy_baer_manager.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]

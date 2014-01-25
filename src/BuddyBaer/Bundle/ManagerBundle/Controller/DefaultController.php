@@ -35,6 +35,11 @@ class DefaultController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
+            /**
+             * @var FileHelper
+             */
+            $fileHelper = $this->get('buddy_baer.file_helper');
+            $newBuddyBaer->setFileHelper($fileHelper);
             $newBuddyBaer->upload();
 
             $em->persist($newBuddyBaer);

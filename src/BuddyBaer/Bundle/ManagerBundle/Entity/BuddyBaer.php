@@ -7,6 +7,7 @@ use BuddyBaer\Bundle\ManagerBundle\Helper\FileHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
 /**
  * BuddyBaer
  *
@@ -61,6 +62,27 @@ class BuddyBaer
      */
     private $description;
 
+    /**
+     * @var FileHelper
+     */
+    private $fileHelper;
+
+    /**
+     * @param mixed $fileHelper
+     */
+    public function setFileHelper($fileHelper)
+    {
+        $this->fileHelper = $fileHelper;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFileHelper()
+    {
+        return $this->fileHelper;
+    }
+
 
     public function getAbsolutePath()
     {
@@ -103,7 +125,7 @@ class BuddyBaer
 
     public function upload(){
 
-        FileHelper::upload($this->file);
+        $this->fileHelper->upload($this->file);
 
         // set the path property to the filename where you've saved the file
         $this->imageName = $this->file->getClientOriginalName();
@@ -243,7 +265,7 @@ class BuddyBaer
     public function trySetLatitudeFromFileIfEmpty()
     {
         if(!$this->latitude || !$this->longitude){
-            $location = FileHelper::getGeoData($this);
+            $location = $this->fileHelper->getGeoData($this);
             $this->setLatitude($location['latitude']);
             $this->setLongitude($location['longitude']);
         }

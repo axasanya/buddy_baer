@@ -10,55 +10,65 @@ namespace BuddyBaer\Bundle\ManagerBundle\Helper;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use BuddyBaer\Bundle\ManagerBundle\Entity\BuddyBaer;
+use BuddyBaer\Bundle\ManagerBundle\Helper\GpsFileHelper;
 
 class FileHelper {
 
-    public static function getImagesAbsolutePath(){
+    /**
+     * @var GpsFileHelper
+     */
+    private $gpsFileHelper;
+
+    public function getImagesAbsolutePath(){
         return __DIR__.'/../../../../../web/images';
     }
 
-    public static function getUploadDir()
+    /**
+     * @param \BuddyBaer\Bundle\ManagerBundle\Helper\GpsFileHelper $gpsFileHelper
+     */
+    public function setGpsFileHelper($gpsFileHelper)
+    {
+        $this->gpsFileHelper = $gpsFileHelper;
+    }
+
+    /**
+     * @return \BuddyBaer\Bundle\ManagerBundle\Helper\GpsFileHelper
+     */
+    public function getGpsFileHelper()
+    {
+        return $this->gpsFileHelper;
+    }
+
+
+
+    public function getUploadDir()
     {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
         return 'web/images';
     }
 
-    public static  function upload(UploadedFile $file)
+    public function upload(UploadedFile $file)
     {
         // the file property can be empty if the field is not required
         if (null === $file) {
             return;
         }
 
-        // use the original file name here but you should
-        // sanitize it at least to avoid any security issues
-
-        // move takes the target directory and then the
-        // target filename to move to
         $file->move(
-            self::getImagesAbsolutePath(),
+            $this->getImagesAbsolutePath(),
             $file->getClientOriginalName()
         );
-/*
-        var_dump("<pre>",
-        $file,
-            self::getImagesAbsolutePath()
-        );die;*/
+
     }
 
     /**
      * @param BuddyBaer $baer
      */
-    public static function getGeoData(BuddyBaer $baer){
-        $file = self::getImagesAbsolutePath() . '/' . $baer->getImageName();
-        //$exifData = exif_read_data( self::getImagesAbsolutePath() . '/' . $file);
-        //var_dump("<pre>", $exifData);die;
-        /**
-         * TODO service
-         */
-        $gpsFileHelper = new GpsFileHelper();
-        $location = $gpsFileHelper->getCoordinate($file);
+    public function getGeoData(BuddyBaer $baer){
+        $file = $this->getImagesAbsolutePath() . '/' . $baer->getImageName();
+
+        $location = $this->gpsFileHelper->getCoordinate($file);
 
         return $location;
     }
