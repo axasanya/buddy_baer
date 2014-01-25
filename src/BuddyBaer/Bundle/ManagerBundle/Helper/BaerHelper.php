@@ -16,8 +16,8 @@ use Ivory\GoogleMap\Overlays\Animation;
 class BaerHelper {
 
     /**
-     *
-     * @return @Marker
+     * @param BuddyBaer $baer
+     * @return Marker
      */
     public static function getMarker(BuddyBaer $baer){
         /** @var Marker */
@@ -35,5 +35,7 @@ class BaerHelper {
 
         return $marker;
     }
+
+
 
 } 

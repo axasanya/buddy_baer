@@ -27,30 +27,6 @@ class DefaultController extends Controller
             $map->addMarker( BaerHelper::getMarker($baer));
         }
 
-
-
-
-    //    $markerFromConfig = $this->get('ivory_google_map.marker');
-    //    $map->addMarker($markerFromConfig);
-
-
-      /*  $marker = new Marker();
-
-        $marker->setPrefixJavascriptVariable('marker_');
-        $marker->setPosition( 52.5343700,13.4305300, true);
-        $marker->setAnimation(Animation::DROP);
-
-        $marker->setOption('clickable', false);
-        $marker->setOption('flat', true);
-        $marker->setOptions(array(
-            'clickable' => false,
-            'flat'      => true,
-        ));
-
-*/
-
-  //      $map->addMarker($marker);
-
         $newBuddyBaer = new BuddyBaer();
         $form = $this->createBaerForm($newBuddyBaer);
 
@@ -78,10 +54,10 @@ class DefaultController extends Controller
      */
     private function createBaerForm(BuddyBaer $buddyBaer){
         $form = $this->createFormBuilder($buddyBaer)
-            ->add('name', 'text')
-            ->add('description', 'textarea')
-            ->add('latitude', 'text')
-            ->add('longitude', 'text')
+            ->add('name', 'text', array("required" => false))
+            ->add('description', 'textarea', array("required" => false))
+            ->add('latitude', 'text', array("required" => false))
+            ->add('longitude', 'text', array("required" => false))
             ->add('file' )
             ->add('save', 'submit')
             ->getForm();

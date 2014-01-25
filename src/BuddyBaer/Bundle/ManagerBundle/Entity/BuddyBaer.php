@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table("buddy_baer")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
 class BuddyBaer
 {
@@ -28,35 +29,35 @@ class BuddyBaer
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=128 )
+     * @ORM\Column(name="name", type="string", length=128, nullable=true )
      */
     private $name;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="latitude", type="float" )
+     * @ORM\Column(name="latitude", type="float", nullable=true )
      */
     private $latitude;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="longitude", type="float" )
+     * @ORM\Column(name="longitude", type="float",nullable=true )
      */
     private $longitude;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="image_name", type="string", length=128 )
+     * @ORM\Column(name="image_name", type="string", length=128, nullable=true )
      */
     private $imageName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text" )
+     * @ORM\Column(name="description", type="text", nullable=true )
      */
     private $description;
 
@@ -234,5 +235,17 @@ class BuddyBaer
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function trySetLatitudeFromFileIfEmpty()
+    {
+        if(!$this->latitude || !$this->longitude){
+            $location = FileHelper::getGeoData($this);
+            $this->setLatitude($location['latitude']);
+            $this->setLongitude($location['longitude']);
+        }
     }
 }

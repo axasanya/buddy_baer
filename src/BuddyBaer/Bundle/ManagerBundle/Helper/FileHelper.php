@@ -9,6 +9,7 @@
 namespace BuddyBaer\Bundle\ManagerBundle\Helper;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use BuddyBaer\Bundle\ManagerBundle\Entity\BuddyBaer;
 
 class FileHelper {
 
@@ -45,4 +46,22 @@ class FileHelper {
             self::getImagesAbsolutePath()
         );die;*/
     }
+
+    /**
+     * @param BuddyBaer $baer
+     */
+    public static function getGeoData(BuddyBaer $baer){
+        $file = self::getImagesAbsolutePath() . '/' . $baer->getImageName();
+        //$exifData = exif_read_data( self::getImagesAbsolutePath() . '/' . $file);
+        //var_dump("<pre>", $exifData);die;
+        /**
+         * TODO service
+         */
+        $gpsFileHelper = new GpsFileHelper();
+        $location = $gpsFileHelper->getCoordinate($file);
+
+        return $location;
+    }
+
+
 } 
