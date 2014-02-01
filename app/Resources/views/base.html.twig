@@ -11,6 +11,8 @@
         <link rel="stylesheet" href="{{ asset(_additionalCSS|trim) }}" media="screen"/>
     {% endif %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    {% block headJavascripts %}
+    {% endblock %}
 </head>
 <body>
     <!-- top -->
@@ -44,25 +46,10 @@
         {% block footer %}
             <footer class="row-fluid">
                 <hr/>
-                2013  Jovago.com
+
             </footer>
         {% endblock %}
     </div>
-    {%- spaceless %}
-        <script type='text/javascript' src='{% javascripts '@labJS' %}{{ asset_url }}{% endjavascripts %}'></script>
-        <script type="text/javascript">
 
-            $LAB.script("//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js").wait();
-
-            {% javascripts '@commonJS' output='js/common_*.js' %}
-            $LAB.script("{{ asset_url }}").wait();
-            {% endjavascripts %}
-
-            {% set _additionalJS = block('additionalJS') %}
-            {% if _additionalJS is not empty %}
-            $LAB.script("{{ _additionalJS|trim }}");
-            {% endif %}
-        </script>
-    {% endspaceless -%}
 </body>
 </html>

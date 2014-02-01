@@ -54,6 +54,7 @@ class DefaultController extends Controller
         ));
     }
 
+
     /**
      * @param BuddyBaer $buddyBaer
      */

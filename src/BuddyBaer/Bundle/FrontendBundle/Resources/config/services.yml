@@ -1,0 +1,7 @@
+parameters:
+#    buddy_baer_frontend.example.class: BuddyBaer\Bundle\FrontendBundle\Example
+
+services:
+#    buddy_baer_frontend.example:
+#        class: %buddy_baer_frontend.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
