@@ -38,10 +38,7 @@ class BaerHelper {
 
         $infoWindow = new InfoWindow();
 
-        $content = '
-        <div class="span12">
-        <img src="http://buddybaer/images/' . $baer->getImageName() . '" width="150px" />
-        </div>';
+        $content = '<div class="span12"><img src="http://buddybaer/images/' . $baer->getImageName() . '" width="150px" /></div>';
 
         $infoWindow->setPrefixJavascriptVariable('info_window_');
         $infoWindow->setPosition(0, 0, true);

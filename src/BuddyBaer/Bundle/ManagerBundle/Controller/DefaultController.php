@@ -6,8 +6,6 @@ use BuddyBaer\Bundle\ManagerBundle\Helper\BaerHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use BuddyBaer\Bundle\ManagerBundle\Entity\BuddyBaer as BuddyBaer;
 use Symfony\Component\HttpFoundation\Request;
-use Ivory\GoogleMap\Overlays\Animation;
-use Ivory\GoogleMap\Overlays\Marker;
 use Ivory\GoogleMapBundle\Entity\Map as Map;
 
 
