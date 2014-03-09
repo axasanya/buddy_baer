@@ -1,3 +1,6 @@
 buddy_baer_manager_homepage:
     pattern:  /manager
     defaults: { _controller: BuddyBaerManagerBundle:Default:index }
+buddy_baer_manager_genarate_json:
+    pattern:  /generate_json
+    defaults: { _controller: BuddyBaerManagerBundle:Default:generateJSON }

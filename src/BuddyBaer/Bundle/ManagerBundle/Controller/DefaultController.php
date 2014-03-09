@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use BuddyBaer\Bundle\ManagerBundle\Entity\BuddyBaer as BuddyBaer;
 use Symfony\Component\HttpFoundation\Request;
 use Ivory\GoogleMapBundle\Entity\Map as Map;
+use Symfony\Component\Filesystem\Filesystem;
 
 
 
@@ -46,9 +47,14 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('buddy_baer_manager_homepage'));
         }
 
+        $generateJSONurl = $this->generateUrl(
+            'buddy_baer_manager_genarate_json'
+        );
+
         return $this->render('BuddyBaerManagerBundle:Default:index.html.twig',
             array('map' => $map,
-                'form'=> $form->createView()
+                'form'=> $form->createView(),
+                'generateJSONurl' => $generateJSONurl,
         ));
     }
 
@@ -66,5 +72,18 @@ class DefaultController extends Controller
             ->add('save', 'submit')
             ->getForm();
         return $form;
+    }
+
+    public function generateJSONAction(Request $request){
+        $baerRepository = $this->getDoctrine()
+            ->getRepository('BuddyBaerManagerBundle:BuddyBaer');
+        $allBears = $baerRepository->findAll();
+
+        $serializer = $this->container->get('jms_serializer');
+        $jsonContent = $serializer->serialize($allBears,'json');
+        $fs = new Filesystem();
+        $fs->dumpFile($this->container->getParameter('json_filename'), $jsonContent);
+
+        return $this->redirect($this->generateUrl('buddy_baer_manager_homepage'));
     }
 }

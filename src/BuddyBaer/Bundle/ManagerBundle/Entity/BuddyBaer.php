@@ -7,6 +7,8 @@ use BuddyBaer\Bundle\ManagerBundle\Helper\FileHelper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use JMS\Serializer\Annotation\ExclusionPolicy as JsonSerializationExclusionPolicy;
+use JMS\Serializer\Annotation\Exclude as ExcludeFromJsonSerialization;
 
 /**
  * BuddyBaer
@@ -14,6 +16,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table("buddy_baer")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
+ *
+ * @JsonSerializationExclusionPolicy("NONE")
  */
 class BuddyBaer
 {
@@ -31,6 +35,7 @@ class BuddyBaer
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=128, nullable=true )
+     *
      */
     private $name;
 
@@ -64,6 +69,7 @@ class BuddyBaer
 
     /**
      * @var FileHelper
+     *
      */
     private $fileHelper;
 
@@ -100,6 +106,7 @@ class BuddyBaer
 
     /**
      * @Assert\File(maxSize="6000000")
+     *
      */
     private $file;
 

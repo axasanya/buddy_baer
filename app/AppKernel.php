@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new BuddyBaer\Bundle\ManagerBundle\BuddyBaerManagerBundle(),
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
             new BuddyBaer\Bundle\FrontendBundle\BuddyBaerFrontendBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
